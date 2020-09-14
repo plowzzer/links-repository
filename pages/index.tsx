@@ -46,68 +46,70 @@ export default function Home() {
   }
 
   return (
-    <div className="flex">
-      <div className="px-4 py-2 m-2">
-        <Input
-          name="link"
-          className="mb-5"
-          label="Url da página"
-          value={url}
-          onChange={(e) => {
-            setUrl(e.target.value);
-          }}
-        />
-        <Button name="Buscar Dados" onClick={handleSearch} />
-
-        <Input
-          name="title"
-          className="mb-5"
-          label="Título da página"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        />
-
-        <Textarea
-          name="description"
-          className="mb-5"
-          label="Descrição"
-          value={description}
-          onChange={(e) => {
-            setDescription(e.target.value);
-          }}
-        />
-
-        <Input
-          name="icon"
-          className="mb-5"
-          label="Icone"
-          value={icon}
-          onChange={(e) => {
-            setIcon(e.target.value);
-          }}
-        />
-
-        <Input
-          name="image"
-          className="mb-5"
-          label="Imagem"
-          value={image}
-          onChange={(e) => {
-            setImage(e.target.value);
-          }}
-        />
-      </div>
-      <div className="px-4 py-2 m-2">
-        {show && (
-          <Card
-            title={title}
-            description={description}
-            icon={icon}
-            image={image}
+    <div className="container mx-auto">
+      <div className="flex">
+        <div className="flex-1 px-4 py-2 m-2">
+          <Input
+            name="link"
+            className="mb-5"
+            label="Url da página"
+            value={url}
+            onChange={(e) => {
+              setUrl(e.target.value);
+            }}
           />
-        )}
+          <Button name="Buscar Dados" onClick={handleSearch} />
+
+          <Input
+            name="title"
+            className="mb-5"
+            label="Título da página"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
+
+          <Textarea
+            name="description"
+            className="mb-10"
+            label="Descrição"
+            value={description}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+          />
+
+          <Input
+            name="icon"
+            className="mb-5"
+            label="Icone"
+            value={icon}
+            onChange={(e) => {
+              setIcon(e.target.value);
+            }}
+          />
+
+          <Input
+            name="image"
+            className="mb-5"
+            label="Imagem"
+            value={image}
+            onChange={(e) => {
+              setImage(e.target.value);
+            }}
+          />
+        </div>
+        <div className="flex-1 px-4 py-2 m-2">
+          {show && (
+            <Card
+              title={title}
+              description={description}
+              icon={icon}
+              image={image}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
