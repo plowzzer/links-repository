@@ -58,7 +58,7 @@ export default function Home() {
               setUrl(e.target.value);
             }}
           />
-          <Button name="Buscar Dados" onClick={handleSearch} />
+          <Button name="Buscar Metadata" onClick={handleSearch} />
 
           <Input
             name="title"
@@ -103,6 +103,7 @@ export default function Home() {
         <div className="flex-1 px-4 py-2 m-2">
           {show && (
             <Card
+              url={url}
               title={title}
               description={description}
               icon={icon}

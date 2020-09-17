@@ -15,15 +15,29 @@ export default async (request: NowRequest, response: NowResponse) => {
   const { document } = new jsdom.JSDOM(result.data).window;
   const metadata = {};
 
-  const titleDOM = document.querySelectorAll('[property="og:title"]');
+  const titleDOM = document.querySelectorAll("title");
+  const titleOG = document.querySelectorAll('[property="og:title"]');
+
   const descriptionDOM = document.querySelectorAll('[name="description"]');
+  const descriptionOG = document.querySelectorAll(
+    '[property="og:description"]'
+  );
+
   const iconDOM = document.querySelectorAll("[rel=icon]");
   const imageDOM = document.querySelectorAll('[name="og:image"]');
+  const imageOG = document.querySelectorAll('[property="og:image"]');
 
-  metadata["title"] = titleDOM.length > 0 ? titleDOM[0].content : null;
+  if (titleDOM.length > 0) {
+    metadata["title"] = titleDOM[0].innerHTML;
+  } else if (titleOG.length > 0) {
+    metadata["title"] = titleOG[0].content;
+  }
 
-  metadata["description"] =
-    descriptionDOM.length > 0 ? descriptionDOM[0].content : null;
+  if (descriptionDOM.length > 0) {
+    metadata["description"] = descriptionDOM[0].content;
+  } else if (descriptionOG.length > 0) {
+    metadata["description"] = descriptionOG[0].content;
+  }
 
   if (iconDOM.length > 0) {
     if (iconDOM[0].href.includes(domain)) {
@@ -33,7 +47,11 @@ export default async (request: NowRequest, response: NowResponse) => {
     }
   }
 
-  metadata["image"] = imageDOM.length > 0 ? imageDOM[0].content : null;
+  if (imageDOM.length > 0) {
+    metadata["image"] = imageDOM[0].content;
+  } else if (imageOG.length > 0) {
+    metadata["image"] = imageOG[0].content;
+  }
 
   return response.status(200).json(metadata);
 };

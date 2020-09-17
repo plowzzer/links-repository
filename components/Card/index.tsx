@@ -1,6 +1,7 @@
 import React from "react";
 
 interface CardLink {
+  url?: string;
   image?: string;
   title?: string;
   icon?: string;
@@ -9,6 +10,7 @@ interface CardLink {
 }
 
 const Card: React.FC<CardLink> = ({
+  url,
   image,
   title,
   icon,
@@ -16,7 +18,11 @@ const Card: React.FC<CardLink> = ({
   tags,
 }) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    <a
+      href={url}
+      target="_blank"
+      className="max-w-sm rounded overflow-hidden shadow-lg"
+    >
       {image && <img className="w-full" src={image} alt={title} />}
       <div className="px-6 py-4">
         <div className="flex items-center font-bold text-xl mb-2">
@@ -39,7 +45,7 @@ const Card: React.FC<CardLink> = ({
             </span>
           </div>;
         })}
-    </div>
+    </a>
   );
 };
 
