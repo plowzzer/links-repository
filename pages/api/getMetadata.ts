@@ -15,17 +15,25 @@ export default async (request: NowRequest, response: NowResponse) => {
   const { document } = new jsdom.JSDOM(result.data).window;
   const metadata = {};
 
-  const titleDOM = document.querySelectorAll("title");
-  const titleOG = document.querySelectorAll('[property="og:title"]');
+  const titleDOM = document.querySelectorAll<HTMLElement>("title");
+  const titleOG = document.querySelectorAll<HTMLMetaElement>(
+    '[property="og:title"]'
+  );
 
-  const descriptionDOM = document.querySelectorAll('[name="description"]');
-  const descriptionOG = document.querySelectorAll(
+  const descriptionDOM = document.querySelectorAll<HTMLMetaElement>(
+    '[name="description"]'
+  );
+  const descriptionOG = document.querySelectorAll<HTMLMetaElement>(
     '[property="og:description"]'
   );
 
-  const iconDOM = document.querySelectorAll("[rel=icon]");
-  const imageDOM = document.querySelectorAll('[name="og:image"]');
-  const imageOG = document.querySelectorAll('[property="og:image"]');
+  const iconDOM = document.querySelectorAll<HTMLLinkElement>("[rel=icon]");
+  const imageDOM = document.querySelectorAll<HTMLMetaElement>(
+    '[name="og:image"]'
+  );
+  const imageOG = document.querySelectorAll<HTMLMetaElement>(
+    '[property="og:image"]'
+  );
 
   if (titleDOM.length > 0) {
     metadata["title"] = titleDOM[0].innerHTML;
