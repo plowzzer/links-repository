@@ -50,6 +50,8 @@ export default async (request: NowRequest, response: NowResponse) => {
   if (iconDOM.length > 0) {
     if (iconDOM[0].href.includes(domain)) {
       metadata["icon"] = iconDOM[0].href;
+    } else if (iconDOM[0].href.includes("http")) {
+      metadata["icon"] = iconDOM[0].href;
     } else {
       metadata["icon"] = `${method}//${domain}${iconDOM[0].href}`;
     }
