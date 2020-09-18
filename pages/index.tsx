@@ -6,12 +6,10 @@ import Input from "../components/Input";
 import Textarea from "../components/Textarea";
 import Button from "../components/Button";
 import Card from "../components/Card";
+import Loading from "../components/Loading";
 
 export default function Home() {
-  const [url, setUrl] = useState(
-    "https://epicreact.dev/soul-crushing-components/"
-  );
-
+  const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("");
@@ -47,19 +45,21 @@ export default function Home() {
 
   return (
     <div className="container mx-auto">
+      <div className="flex items-end mb-10">
+        <Input
+          name="link"
+          label="Url da página"
+          value={url}
+          onChange={(e) => {
+            setUrl(e.target.value);
+          }}
+          className="flex-1 mr-2"
+        />
+        <Button name="Visualizar" onClick={handleSearch} />
+      </div>
+
       <div className="flex">
         <div className="flex-1 px-4 py-2 m-2">
-          <Input
-            name="link"
-            className="mb-5"
-            label="Url da página"
-            value={url}
-            onChange={(e) => {
-              setUrl(e.target.value);
-            }}
-          />
-          <Button name="Buscar Metadata" onClick={handleSearch} />
-
           <Input
             name="title"
             className="mb-5"
@@ -72,7 +72,7 @@ export default function Home() {
 
           <Textarea
             name="description"
-            className="mb-10"
+            className="mb-5"
             label="Descrição"
             value={description}
             onChange={(e) => {
@@ -101,7 +101,8 @@ export default function Home() {
           />
         </div>
         <div className="flex-1 px-4 py-2 m-2">
-          {show && (
+          {loading && <Loading />}
+          {!loading && show && (
             <Card
               url={url}
               title={title}

@@ -18,21 +18,27 @@ const Card: React.FC<CardLink> = ({
   tags,
 }) => {
   return (
-    <a
-      href={url}
-      target="_blank"
-      className="max-w-sm rounded overflow-hidden shadow-lg"
-    >
-      {image && <img className="w-full" src={image} alt={title} />}
+    <div className="max-w-sm rounded overflow-hidden shadow-lg">
+      {image && (
+        <a href={url} target="_blank">
+          <img className="w-full" src={image} alt={title} />
+        </a>
+      )}
       <div className="px-6 py-4">
-        <div className="flex items-center font-bold text-xl mb-2">
-          {icon && (
-            <div className="mr-2">
-              <img src={icon} style={{ maxWidth: 16, maxHeight: 16 }} />
-            </div>
-          )}
-          <div>{title}</div>
-        </div>
+        <a
+          href={url}
+          target="_blank"
+          className="flex items-center font-bold text-xl mb-2"
+        >
+          <div>
+            {icon && (
+              <div className="mr-2 mt-2 float-left">
+                <img src={icon} style={{ maxWidth: 16, maxHeight: 16 }} />
+              </div>
+            )}
+            {title}
+          </div>
+        </a>
         {description && (
           <p className="text-gray-700 text-base">{description}</p>
         )}
@@ -45,7 +51,7 @@ const Card: React.FC<CardLink> = ({
             </span>
           </div>;
         })}
-    </a>
+    </div>
   );
 };
 

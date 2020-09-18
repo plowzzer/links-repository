@@ -33,7 +33,7 @@ const Textarea: React.FC<TextareaProps> = ({
           appearance-none 
           border 
           rounded 
-          w-full 
+          w-full
           py-2 
           px-3 
           text-gray-700 
@@ -41,6 +41,7 @@ const Textarea: React.FC<TextareaProps> = ({
           focus:outline-none 
           focus:shadow-outline
         "
+        style={{ minHeight: "120px" }}
         id={name}
         {...rest}
       />

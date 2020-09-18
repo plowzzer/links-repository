@@ -10,6 +10,7 @@ const Button: React.FC<{ name: string; onClick }> = ({ name, onClick }) => {
       hover:bg-blue-700 
       text-white 
       font-bold 
+      items-center
       py-2 
       px-4 
       rounded 
