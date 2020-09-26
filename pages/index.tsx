@@ -1,118 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import Head from "next/head";
-import Input from "../components/Input";
-import Textarea from "../components/Textarea";
-import Button from "../components/Button";
-import Card from "../components/Card";
+import Card, {CardLink} from "../components/Card";
 import Loading from "../components/Loading";
 
 export default function Home() {
-  const [url, setUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [icon, setIcon] = useState("");
-  const [image, setImage] = useState("");
+  const [cards, setCards] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  async function handleSearch() {
-    setLoading(true);
-    setShow(false);
-    setTitle("");
-    setDescription("");
-    setIcon("");
-    setImage("");
-    try {
-      const { status, data } = await axios.post("/api/getMetadata", { url });
+  useEffect(() => {
+    async function loadCards() {
+      console.log('loadCards')
+      const response = await axios.get('/api/listLinks')
 
-      if (status !== 200) {
-        return;
-      }
+      console.log(response)
+      response.data && setCards(response.data)
 
-      setLoading(false);
-      data.title && setTitle(data.title);
-      data.description && setDescription(data.description);
-      data.icon && setIcon(data.icon);
-      data.image && setImage(data.image);
-      setShow(true);
-    } catch (error) {
-      setLoading(true);
-      console.error(error);
+      setLoading(false)
     }
-  }
 
-  return (
+    loadCards()
+  }, [])
+
+  return(
     <div className="container mx-auto">
-      <div className="flex items-end mb-10">
-        <Input
-          name="link"
-          label="Url da página"
-          value={url}
-          onChange={(e) => {
-            setUrl(e.target.value);
-          }}
-          className="flex-1 mr-2"
-        />
-        <Button name="Visualizar" onClick={handleSearch} />
-      </div>
-
-      <div className="flex">
-        <div className="flex-1 px-4 py-2 m-2">
-          <Input
-            name="title"
-            className="mb-5"
-            label="Título da página"
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
-
-          <Textarea
-            name="description"
-            className="mb-5"
-            label="Descrição"
-            value={description}
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-          />
-
-          <Input
-            name="icon"
-            className="mb-5"
-            label="Icone"
-            value={icon}
-            onChange={(e) => {
-              setIcon(e.target.value);
-            }}
-          />
-
-          <Input
-            name="image"
-            className="mb-5"
-            label="Imagem"
-            value={image}
-            onChange={(e) => {
-              setImage(e.target.value);
-            }}
-          />
-        </div>
-        <div className="flex-1 px-4 py-2 m-2">
-          {loading && <Loading />}
-          {!loading && show && (
-            <Card
-              url={url}
-              title={title}
-              description={description}
-              icon={icon}
-              image={image}
-            />
-          )}
-        </div>
-      </div>
+      {loading && <Loading />}
+      {cards.map(card => {
+        return <Card
+        url={card.url ? card.url : null}
+        title={card.title ? card.title : null}
+        description={card.description ? card.description: null}
+        icon={card.icon ? card.icon: null}
+        image={card.image ? card.image: null}
+      />
+      })}
     </div>
-  );
+  )
 }

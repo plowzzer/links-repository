@@ -1,6 +1,6 @@
 import React from "react";
 
-interface CardLink {
+export interface CardLink {
   url?: string;
   image?: string;
   title?: string;
